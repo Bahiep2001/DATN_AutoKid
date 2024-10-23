@@ -1,0 +1,113 @@
+.main table {
+  margin-left: 50px;
+  width: 1200px;
+}
+
+.main table th {
+  padding-right: 50px;
+}
+
+.main table button {
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.main table .update {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.main table .delete {
+  background-color: #bd2130;
+  color: #fff;
+}
+
+.darkmode .user-title {
+  color: #ffffff;
+}
+
+.main .search {
+  margin-left: 50px;
+}
+
+.main .search .txt-search,
+.main .search input::placeholder {
+  background-color: #404040;
+  color: #adb5bd;
+}
+
+.main .search .btn-search {
+  color: #adb5bd;
+  background-color: #343a40;
+  border-radius: 5px;
+  height: 40px;
+  width: 100px;
+}
+
+.main .search .btn-search:hover {
+  background-color: #adb5bd;
+  color: #000000;
+}
+
+.main .pageable {
+  margin-top: 20px;
+}
+
+.main .pageable a {
+  border: 2px solid #adb5bd;
+  border-radius: 5px;
+  padding: 10px 30px;
+  color: #161624;
+  background-color: #4bde97;
+  margin-left: 50px;
+}
+
+.main .pageable a:hover {
+  background-color: #161624;
+  color: #4bde97;
+}
+
+.main table .form-modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  width: 80%;
+  max-width: 700px;
+  border-radius: 10px;
+}
+
+.main table .form-modal h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.main table .form-modal form .label-after {
+  margin-left: 20px;
+}
+
+.main table .form-modal form input {
+  margin-top: 10px;
+}
+
+.main table .form-modal .btn-closeDetail {
+  background-color: #9fcdff;
+}
+
+.main table .form-modal .btn-closeDetail:hover {
+  background-color: #000;
+  color: #9fcdff;
+}
+
+/* CSS mới để ghi đè */
+.date:enabled:read-write:focus::-webkit-calendar-picker-indicator,
+.date:enabled:read-write:hover::-webkit-calendar-picker-indicator {
+  display: block !important; /* Hiện lại icon */
+}

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Autokid</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon" />
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="./css/style.min.css" type="text/css" />
+    <link rel="stylesheet" th:href="@{/css/style.min.css}" type="text/css" />
+    <link
+      rel="stylesheet"
+      th:href="@{/css/customerManager.css}"
+      type="text/css"
+    />
+    <link rel="stylesheet" href="./css/customerManager.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+
+  <body>
+    <div class="layer"></div>
+    <!-- ! Body -->
+    <a class="skip-link sr-only" href="#skip-target">Skip to content</a>
+    <div class="page-flex">
+      <!-- ! Sidebar -->
+      <div th:insert="fragments/sidebar_admin :: sidebar"></div>
+
+      <div class="main-wrapper">
+        <!-- ! Main nav -->
+        <div th:insert="fragments/header_admin :: header"></div>
+        <!-- ! Main -->
+        <main class="main users chart-page" id="skip-target">
+          <div class="container">
+            <h2 class="main-title">Quản lý thông tin khách hàng</h2>
+            <div class="row">
+              <div class="col-lg-9">
+                <div class="users-table">
+                  <div class="search search-wrapper">
+                    <form
+                      method="get"
+                      action="/admin/customer-management/search-customer"
+                    >
+                      <i data-feather="search" aria-hidden="true"></i>
+                      <input
+                        type="text"
+                        class="txt-search"
+                        th:value="${ten}"
+                        name="ten"
+                        placeholder="Nhập tên khách hàng"
+                      />
+                      <button class="btn-search" type="submit">Tìm kiếm</button>
+                    </form>
+                  </div>
+                  <table class="posts-table">
+                    <thead>
+                      <tr class="users-table-info">
+                        <th>STT</th>
+                        <th>Mã Khách hàng</th>
+                        <th>Tên khách hàng</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Địa chỉ</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="khachhang,iterStat : ${khachhang}">
+                        <td th:text="${iterStat.count}"></td>
+                        <td th:text="${khachhang.maKH}"></td>
+                        <td th:text="${khachhang.tenKH}"></td>
+                        <td th:text="${khachhang.email}"></td>
+                        <td th:text="${khachhang.sdt}"></td>
+                        <td th:text="${khachhang.diaChi}"></td>
+                        <td>
+                          <!-- Nút Chi tiết -->
+                          <div
+                            style="
+                              display: flex;
+                              align-items: center;
+                              justify-content: space-around;
+                            "
+                          >
+                            <button
+                              class="update"
+                              th:data-ma="${khachhang.maKH}"
+                              th:data-ten="${khachhang.tenKH}"
+                              th:data-email="${khachhang.email}"
+                              th:data-sdt="${khachhang.sdt}"
+                              th:data-diaChi="${khachhang.diaChi}"
+                              th:data-tenNN="${khachhang.thongTinVanChuyen.tenNguoiNhan}"
+                              th:data-sdtNN="${khachhang.thongTinVanChuyen.sdt}"
+                              th:data-dcNN="${khachhang.thongTinVanChuyen.diaChi}+', '+${khachhang.thongTinVanChuyen.xa}+', '+${khachhang.thongTinVanChuyen.huyen}+', '+${khachhang.thongTinVanChuyen.tinh}"
+                              onclick="showDetail(this)"
+                            >
+                              Chi tiết
+                            </button>
+                            <!-- Overlay -->
+                            <div
+                              id="overlay"
+                              style="
+                                display: none;
+                                position: fixed;
+                                top: 0;
+                                left: 0;
+                                width: 100%;
+                                height: 100%;
+                                background: rgba(0, 0, 0, 0.5);
+                                z-index: 500;
+                              "
+                            ></div>
+                            <form action="">
+                              <button
+                                class="delete"
+                                onclick="confirmAction(${khachhang.idKH})"
+                              >
+                                Xóa
+                              </button>
+                            </form>
+                          </div>
+                          <!-- Modal -->
+                          <div id="detailModal" class="form-modal">
+                            <div>
+                              <h2>Chi tiết thông tin khách hàng</h2>
+                              <form>
+                                <div>
+                                  <label>Mã khách hàng: </label>
+                                  <input type="text" id="modalMaKH" readonly />
+                                  <label class="label-after"
+                                    >Tên khách hàng:
+                                  </label>
+                                  <input type="text" id="modalTenKH" readonly />
+                                </div>
+                                <div>
+                                  <label>Email: </label>
+                                  <input type="text" id="modalEmail" readonly />
+                                </div>
+                                <div>
+                                  <label>Số điện thoại: </label>
+                                  <input type="text" id="modalSdt" readonly />
+                                </div>
+                                <div>
+                                  <label>Địa chỉ: </label>
+                                  <input
+                                    type="text"
+                                    id="modalDiaChi"
+                                    readonly
+                                  />
+                                </div>
+                              </form>
+                              <h4 style="color: #c82333; margin: 10px">
+                                Thông tin nhận hàng
+                              </h4>
+                              <form action="">
+                                <div>
+                                  <label>Tên người nhận: </label>
+                                  <input type="text" id="modalTenNN" readonly />
+                                </div>
+                                <div>
+                                  <label>Số điện thoại: </label>
+                                  <input type="text" id="modalSdtNN" readonly />
+                                </div>
+                                <div>
+                                  <label>Địa chỉ nhận hàng: </label>
+                                  <input
+                                    type="text"
+                                    id="modalDCNN"
+                                    style="width: 80%"
+                                    readonly
+                                  />
+                                </div>
+                              </form>
+                              <button
+                                class="btn-closeDetail"
+                                onclick="closeDetail()"
+                              >
+                                Đóng
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="pageable" th:if="${alone == 0}">
+                    <a
+                      th:href="${currentPage == 0} ? '#' : @{http://localhost:8080/admin/customer-management/(page=${currentPage - 1})}"
+                      class="prev"
+                      th:classappend="${currentPage == 0} ? 'disabled'"
+                    >
+                      Lùi
+                    </a>
+
+                    <a
+                      th:href="${currentPage == totalPage - 1} ? '#' : @{http://localhost:8080/admin/customer-management/(page=${currentPage + 1})}"
+                      class="next"
+                      th:classappend="${currentPage == totalPage - 1} ? 'disabled'"
+                    >
+                      Tiến
+                    </a>
+                    <style>
+                      .disabled {
+                        pointer-events: none;
+                        opacity: 0.6;
+                      }
+                    </style>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- ! Footer -->
+        <div th:insert="fragments/footer_admin :: footer"></div>
+      </div>
+    </div>
+    <!-- Chart library -->
+    <script src="./plugins/chart.min.js"></script>
+    <!-- Icons library -->
+    <script src="plugins/feather.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="js/script.js"></script>
+    <script>
+      function confirmAction(idKH) {
+        const url = `http://localhost:8080/admin/customer-management/delete-customer(idKH=${idKH})`;
+        // Hiển thị hộp thoại xác nhận SweetAlert
+        Swal.fire({
+          title: "Bạn có chắc chắn muốn xóa khách hàng này không?",
+          text: "Thao tác trên sẽ xóa vĩnh viễn người dùng!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Có",
+          cancelButtonText: "Không",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Nếu người dùng chọn "Có, thực hiện!"
+            Swal.fire(
+              "Đã xóa thành công!",
+              "Hành động của bạn đã được xác nhận.",
+              "success"
+            )
+              // Thực hiện hành động cần thiết ở đây
+              .then(() => {
+                window.location.href = url;
+              });
+          } else {
+            // Nếu người dùng chọn "Không, hủy!"
+            Swal.fire("Đã hủy!", "Hành động của bạn đã bị hủy.", "error");
+          }
+        });
+      }
+
+      function showDetail(button) {
+        document.getElementById("modalMaKH").value =
+          button.getAttribute("data-ma");
+        document.getElementById("modalTenKH").value =
+          button.getAttribute("data-ten");
+        document.getElementById("modalEmail").value =
+          button.getAttribute("data-email");
+        document.getElementById("modalSdt").value =
+          button.getAttribute("data-sdt");
+        document.getElementById("modalDiaChi").value =
+          button.getAttribute("data-diaChi");
+        document.getElementById("modalTenNN").value =
+          button.getAttribute("data-tenNN");
+        document.getElementById("modalSdtNN").value =
+          button.getAttribute("data-sdtNN");
+        document.getElementById("modalDCNN").value =
+          button.getAttribute("data-dcNN");
+        document.getElementById("detailModal").style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+      }
+
+      function closeDetail() {
+        document.getElementById("detailModal").style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+      }
+    </script>
+    <script>
+      document
+        .querySelector('input[type="date"]')
+        .addEventListener("mouseover", function (e) {
+          e.stopPropagation(); // Ngăn sự kiện hover lan truyền
+        });
+    </script>
+  </body>
+</html>
