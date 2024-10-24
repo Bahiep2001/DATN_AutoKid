@@ -30,5 +30,8 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler("/admin/staff/**")
                 .addResourceLocations("classpath:/templates/admin/");
+
+        registry.addResourceHandler("/admin/ban-hang/**")
+                .addResourceLocations("classpath:/templates/admin/");
     }
 }
