@@ -24,7 +24,7 @@ public class AdminBanHangController {
 
     @GetMapping("/home")
     public String products(Model model) {
-        List<SanPhamChiTiet> sanPhamChiTiets = service.getAllSanPhamChiTiets();
+        List<SanPhamChiTiet> sanPhamChiTiets = service.getAllSanPham();
         model.addAttribute("currentPage", "products");
         model.addAttribute("spcts", sanPhamChiTiets);
         return "admin/ban-hang";

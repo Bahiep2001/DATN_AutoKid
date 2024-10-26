@@ -62,7 +62,7 @@
                         <thead>
                         <tr class="users-table-info">
                             <th>Mã sản phẩm</th>
-                            <th>Ảnh</th>
+<!--                            <th>Ảnh</th>-->
                             <th>Tên sản phẩm</th>
                             <th>Trạng thái</th>
                             <th>Ngày tạo</th>
@@ -75,11 +75,11 @@
                                     data-don-gia=${spct.donGia},data-mo-ta=${spct.moTa},
                                     data-thuong-hieu=${spct.thuongHieu.tenTH},data-chat-lieu=${spct.chatLieu.tenCl},data-mau-sac=${spct.mauSac.tenMS},data-kich-co=${spct.kichCo.tenKC}">
                             <td th:text="${spct.maSPCT}"></td>
-                            <td>
-                                <div class="categories-table-img">
-                                    <img src="./img/categories/01.jpg" alt="product">
-                                </div>
-                            </td>
+<!--                            <td>-->
+<!--                                <div class="categories-table-img">-->
+<!--                                    <img src="./img/categories/01.jpg" alt="product">-->
+<!--                                </div>-->
+<!--                            </td>-->
                             <td th:text="${spct.sanPham.tenSP}"></td>
                             <td th:text="${spct.trangThaiSPCT}"></td>
 <!--                            <td th:text="${spct.sanPham.ngayTao}"></td>-->
@@ -89,6 +89,21 @@
                         </tbody>
 
                     </table>
+                </div>
+                <div>
+                    <ul class="pagination">
+                        <li th:if="${currentPage > 0}">
+                            <a th:href="@{/products(page=${currentPage - 1})}">Previous</a>
+                        </li>
+                        <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                            <a th:href="@{/products(page=${i})}"
+                               th:text="${i + 1}"
+                               th:classappend="${i == currentPage} ? 'active'"></a>
+                        </li>
+                        <li th:if="${currentPage < totalPages - 1}">
+                            <a th:href="@{/products(page=${currentPage + 1})}">Next</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </main>

@@ -5,6 +5,9 @@ import com.example.demo.repository.*;
 import com.example.demo.repository.SanPhamRepo;
 import com.example.demo.response.SanPhamChiTietResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,12 +36,13 @@ public class QuanLySanPhamService {
     @Autowired
     ChatLieuRepo chatLieuRepo;
 
-    public List<SanPhamChiTiet> getAllSanPhamChiTiets() {
-        return sanPhamChiTietRepo.findAll();
+
+    public Page<SanPhamChiTiet> getAllSanPhamChiTiets(Pageable pageable) {
+        return sanPhamChiTietRepo.findAll(pageable);
     }
 
-    public List<SanPham> getAllSanPham(){
-        return sanPhamRepo.findAll();
+    public List<SanPhamChiTiet> getAllSanPham(){
+        return sanPhamChiTietRepo.findAll();
     }
 
     public List<ThuongHieu> getAllThuongHieu(){

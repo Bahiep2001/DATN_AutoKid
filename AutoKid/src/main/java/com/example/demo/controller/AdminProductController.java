@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.model.*;
 import com.example.demo.service.QuanLySanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,14 +24,17 @@ public class AdminProductController {
     }
 
     @GetMapping("/products")
-    public String products(Model model) {
-        List<SanPhamChiTiet> sanPhamChiTiets = service.getAllSanPhamChiTiets();
-        List<SanPham> sanPhams = service.getAllSanPham();
-        model.addAttribute("currentPage", "products");
-        model.addAttribute("spcts", sanPhamChiTiets);
-//        model.addAttribute("spcts", sanPhams);
+    public String products(@RequestParam(defaultValue = "0") int page, Model model) {
+        int pageSize = 7;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<SanPhamChiTiet> sanPhamChiTiets =  service.getAllSanPhamChiTiets(pageable);
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", sanPhamChiTiets.getTotalPages());
+        model.addAttribute("spcts", sanPhamChiTiets.getContent());
         return "admin/products";
     }
+
 
     @GetMapping("/statistical")
     public String statistical() {
