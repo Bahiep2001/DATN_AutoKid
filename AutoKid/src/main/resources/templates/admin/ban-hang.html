@@ -36,7 +36,7 @@
               <div class="col-md-3" th:each="spct : ${spcts}">
                 <div class="card mb-4">
                   <img src="./screenshot.jpg" class="card-img-top" alt="Product Image">
-                  <div class="card-body">
+                  <div class="card-body" style="font-size: small;">
                     <p class="card-title" th:text="${spct.donGia} + ' VND'"></p>
                     <p class="card-text" th:text="${spct.sanPham.tenSP} "></p>
                     <button class="btn btn-primary btn-sm" onclick="addToCart('${spct.sanPham.tenSP}', ${spct.donGia})">Thêm vào giỏ</button>

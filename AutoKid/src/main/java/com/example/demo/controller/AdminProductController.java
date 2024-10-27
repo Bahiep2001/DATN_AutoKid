@@ -135,4 +135,16 @@ public class AdminProductController {
         service.deleteChatLieu(id);
         return "redirect:/admin/chat-lieu";
     }
+
+    @GetMapping("/loai-san-pham")
+    public String getAllLoaiSanPham(@RequestParam(defaultValue = "0") int page, Model model) {
+        int pageSize = 7;
+        PageRequest pageable = PageRequest.of(page, pageSize);
+        Page<LoaiSanPham> loaiSanPhams = service.getAllLoaiSanPham(pageable);
+
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", loaiSanPhams.getTotalPages());
+        model.addAttribute("lsps", loaiSanPhams.getContent());
+        return "admin/loai-san-pham";
+    }
 }

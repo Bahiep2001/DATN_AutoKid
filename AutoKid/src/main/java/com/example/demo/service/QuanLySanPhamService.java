@@ -36,6 +36,8 @@ public class QuanLySanPhamService {
     @Autowired
     ChatLieuRepo chatLieuRepo;
 
+    @Autowired
+    LoaiSanPhamRepo loaiSanPhamRepo;
 
     public Page<SanPhamChiTiet> getAllSanPhamChiTiets(Pageable pageable) {
         return sanPhamChiTietRepo.findAll(pageable);
@@ -104,6 +106,18 @@ public class QuanLySanPhamService {
 
     public void deleteChatLieu(Integer id){
         chatLieuRepo.deleteById(id);
+    }
+
+    public void addLoaiSanPham(LoaiSanPham loaiSanPham){
+        loaiSanPhamRepo.save(loaiSanPham);
+    }
+
+    public Page<LoaiSanPham> getAllLoaiSanPham(Pageable pageable) {
+        return loaiSanPhamRepo.findAll(pageable);
+    }
+
+    public void deleteLoaiSanPham(Integer id){
+        loaiSanPhamRepo.deleteById(id);
     }
 
     public List<SanPhamChiTietResponse> getAll(){

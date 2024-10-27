@@ -48,7 +48,7 @@
                 <h2 class="main-title">Quản Lý Sản Phẩm</h2>
                 <div class="row">
                     <div class="col-5">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">ADD</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Thêm</button>
                     </div>
                     <div class="col-5">
                         <div class="row">
@@ -93,15 +93,14 @@
                 <div>
                     <ul class="pagination">
                         <li th:if="${currentPage > 0}">
-                            <a th:href="@{/products(page=${currentPage - 1})}">Previous</a>
+                            <a th:href="@{/admin/products(page=${currentPage - 1})}">Quay lại</a>
                         </li>
                         <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                            <a th:href="@{/products(page=${i})}"
-                               th:text="${i + 1}"
+                            <a th:href="@{/admin/products(page=${i})}"
                                th:classappend="${i == currentPage} ? 'active'"></a>
                         </li>
                         <li th:if="${currentPage < totalPages - 1}">
-                            <a th:href="@{/products(page=${currentPage + 1})}">Next</a>
+                            <a th:href="@{/admin/products(page=${currentPage + 1})}">Tiếp</a>
                         </li>
                     </ul>
                 </div>
