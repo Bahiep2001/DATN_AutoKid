@@ -64,8 +64,8 @@
                             <th>Mã sản phẩm</th>
 <!--                            <th>Ảnh</th>-->
                             <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
                             <th>Trạng thái</th>
-                            <th>Ngày tạo</th>
                             <th>Hành động</th>
                         </tr>
                         </thead>
@@ -81,6 +81,7 @@
 <!--                                </div>-->
 <!--                            </td>-->
                             <td th:text="${spct.sanPham.tenSP}"></td>
+                            <td th:text="${spct.soLuong}"></td>
                             <td th:text="${spct.trangThaiSPCT}"></td>
 <!--                            <td th:text="${spct.sanPham.ngayTao}"></td>-->
                             <td class="view-detail" data-bs-toggle="modal" data-bs-target="#productDetailModal">Chi tiết</td>
